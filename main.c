@@ -60,8 +60,15 @@ void setup(void){
 	GPIO_Init(LCD_D7_PORT, LCD_D7_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
 	
 	//LED diody
-	GPIO_Init(LED_PORT, LED_RED_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+	GPIO_Init(LED_PORT, LED_Y1_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+	GPIO_Init(LED_PORT, LED_Y2_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+	GPIO_Init(LED_PORT, LED_Y3_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
 	GPIO_Init(LED_PORT, LED_GREEN_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+	GPIO_Init(LED_PORT, LED_RED_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+	
+	//piezo-mìniè
+	GPIO_Init(ZVUK_PORT, ZVUK_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+
 	
 	//AD pøevodník
 	ADC2_SchmittTriggerConfig(ADC2_SCHMITTTRIG_CHANNEL0,DISABLE);
@@ -82,6 +89,18 @@ int16_t volna_mista=5; //poèet volných míst na parkovišti
 int16_t pocet_mist=5;
 int16_t obsazeno=0;
 
+void delay_ms(uint16_t ms)
+{
+    uint16_t i;
+    for (i = 0; i < ms; ++i) {
+        _delay_us(250);
+        _delay_us(250);
+        _delay_us(250);
+        _delay_us(248);
+    }
+}
+
+
 //funkce pro èekání 1 sekundu
 void delay1s(void) {
 	uint16_t i;
@@ -100,6 +119,10 @@ void main(void){
 	lcd_puts("PARKOVISTE");
 	//zelená LED - volná místa k dispozici
 	LED_GREEN_ON;
+	LED_Y1_ON;
+	LED_Y2_ON;
+	LED_Y3_ON;
+	ZVUK_UP;
 	
 	while(1){
 		if (milis()-time>300){
@@ -128,7 +151,7 @@ void main(void){
 				LED_RED_ON; //èervená LED - plné parkovištì, žádná volná místa
 				lcd_clear();
 				lcd_gotoxy(0, 0);
-				lcd_puts("LEGO PARKOVISTE");
+				lcd_puts("PARKOVISTE");
 				lcd_gotoxy(0, 1);
 				lcd_puts("obsazeno");	
 				volna_mista==obsazeno;
