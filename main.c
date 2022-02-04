@@ -14,6 +14,9 @@ popis: - piezo mìniè
 #include "stdio.h"
 #include "spse_stm8.h"
 
+#define _ISOC99_SOURCE
+#define _GNU_SOURCE
+
 //definice portù a pinù pro LED
 #define LED_PORT	GPIOG       // PG
 
@@ -47,6 +50,21 @@ popis: - piezo mìniè
 #define ZVUK_UP  GPIO_WriteLow(ZVUK_PORT, ZVUK_PIN);
 #define ZVUK_REVERSE GPIO_WriteReverse(ZVUK_PORT, ZVUK_PIN);
 
+void tim2_setup(void){
+     TIM2_TimeBaseInit(TIM2_PRESCALER_8, 40000); 
+    //TIM2_ITConfig(TIM2_IT_UPDATE, ENABLE);
+    TIM2_OC1Init(                // inicializujeme kanál 1 (TM2_CH1)
+        TIM2_OCMODE_PWM1,        // režim PWM1
+        TIM2_OUTPUTSTATE_ENABLE, // Výstup povolen (TIMer ovládá pin)
+        2000,                    // výchozí hodnota šíøky pulzu (støídy) 1056/1600 = 66%
+        TIM2_OCPOLARITY_HIGH      // Polarita LOW protože LED rozsvìcím 0 (spol. anoda)
+     );
+
+    // ošetøení nežádoucích jevù pøi zmìnì PWM
+    TIM2_OC1PreloadConfig(ENABLE);
+
+    TIM2_Cmd(ENABLE);
+}
 
 void setup(void){
 	CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
@@ -78,7 +96,10 @@ void setup(void){
 	ADC2_Select_Channel(ADC2_CHANNEL_1);
 	ADC2_Cmd(ENABLE);
 	ADC2_Startup_Wait();
+	tim2_setup();
 }
+
+
 
 //promìnné
 char text[32];
@@ -88,6 +109,10 @@ uint32_t time=0;
 int16_t volna_mista=5; //poèet volných míst na parkovišti
 int16_t pocet_mist=5;
 int16_t obsazeno=0;
+
+uint16_t PWM = 2000;
+uint16_t prvni = 0;
+uint16_t druhy = 0;
 
 void delay_ms(uint16_t ms)
 {
@@ -119,10 +144,16 @@ void main(void){
 	lcd_puts("PARKOVISTE");
 	//zelená LED - volná místa k dispozici
 	LED_GREEN_ON;
-	LED_Y1_ON;
-	LED_Y2_ON;
-	LED_Y3_ON;
-	ZVUK_UP;
+	LED_Y1_OFF;
+	LED_Y2_OFF;
+	LED_Y3_OFF;
+	ZVUK_DOWN;
+	
+	TIM2_SetCompare1(2000);
+	delay1s();
+	TIM2_SetCompare1(4000);
+
+
 	
 	while(1){
 		if (milis()-time>300){
@@ -131,13 +162,65 @@ void main(void){
 			snimac_druhy=ADC_get(ADC2_CHANNEL_0); //zaznamenání pohybu na druhém snímaèi
 			
 			if (snimac_prvni < 500){
+				if (snimac_druhy < 500){
+					volna_mista--;
+					LED_Y1_ON;
+					delay_ms(60);
+					LED_Y1_OFF;
+					LED_Y2_ON;
+					delay_ms(60);
+					LED_Y2_OFF;
+					LED_Y3_ON;
+					delay_ms(60);
+					LED_Y3_OFF;
+					delay1s();
+				}
+			}
+			snimac_prvni=ADC_get(ADC2_CHANNEL_1); //zaznamenání pohybu na prvním snímaèi
+			snimac_druhy=ADC_get(ADC2_CHANNEL_0); //zaznamenání pohybu na druhém snímaèi
+			if (snimac_druhy < 500){
+				if (snimac_prvni < 500){
+					volna_mista++; 
+					LED_Y3_ON;
+					delay_ms(60);
+					LED_Y3_OFF;
+					LED_Y2_ON;
+					delay_ms(60);
+					LED_Y2_OFF;
+					LED_Y1_ON;
+					delay_ms(60);
+					LED_Y1_OFF;	
+					delay1s();
+				}
+			}
+			
+/*
+			if (snimac_prvni < 500){
 				volna_mista--; //pohyb na vjezdu... -1 volných míst
+				LED_Y1_ON;
+				delay_ms(60);
+				LED_Y1_OFF;
+				LED_Y2_ON;
+				delay_ms(60);
+				LED_Y2_OFF;
+				LED_Y3_ON;
+				delay_ms(60);
+				LED_Y3_OFF;
 			}
 			
 			if (snimac_druhy < 500){
 				volna_mista++; //pohyb na výjezdu... +1 volných míst
+				LED_Y3_ON;
+				delay_ms(60);
+				LED_Y3_OFF;
+				LED_Y2_ON;
+				delay_ms(60);
+				LED_Y2_OFF;
+				LED_Y1_ON;
+				delay_ms(60);
+				LED_Y1_OFF;	
 			}
-			
+*/			
 			//LCD bude ukazovat max. 5 volných míst
 			if (volna_mista<=pocet_mist+1){
 				lcd_gotoxy(0, 1);
