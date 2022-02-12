@@ -176,16 +176,16 @@ void main(void){
 				prvni=1; //pomocná promìnná pro zapamatování, že auto se objevilo pøed prvním snímaèem
 				
 				if (druhy==1){
-					volna_mista++; 
-					LED_Y3_ON;
-					delay_ms(60);
-					LED_Y3_OFF;
-					LED_Y2_ON;
-					delay_ms(60);
-					LED_Y2_OFF;
+					volna_mista++;
 					LED_Y1_ON;
-					delay_ms(60);
-					LED_Y1_OFF;	
+					delay_ms(90);
+					LED_Y1_OFF;
+					LED_Y2_ON;
+					delay_ms(90);
+					LED_Y2_OFF;
+					LED_Y3_ON;
+					delay_ms(90);
+					LED_Y3_OFF;
 					ZVUK_UP;
 					delay_ms(200);
 					ZVUK_DOWN;
@@ -204,16 +204,16 @@ void main(void){
 				druhy=1; //pomocná promìnná pro zapamatování, že auto se objevilo pøed druhým snímaèem
 				
 				if (prvni==1) {
-					volna_mista--;
-					LED_Y1_ON;
-					delay_ms(60);
-					LED_Y1_OFF;
-					LED_Y2_ON;
-					delay_ms(60);
-					LED_Y2_OFF;
+					volna_mista--; 
 					LED_Y3_ON;
-					delay_ms(60);
+					delay_ms(90);
 					LED_Y3_OFF;
+					LED_Y2_ON;
+					delay_ms(90);
+					LED_Y2_OFF;
+					LED_Y1_ON;
+					delay_ms(90);
+					LED_Y1_OFF;	
 					ZVUK_UP;
 					delay_ms(200);
 					ZVUK_DOWN;
