@@ -9,14 +9,14 @@ Podle smìru prùjezdu se bude k promìnné volna_mista buï pøièítat, anebo odèítat 
 Pøi každém prùjezdu vydá piezomìniè na 200 ms zvukový signál. souèasnì 3 LED diody vizualizují smìr prùjezdu.
 Aktuální stav volných míst zobrazuje alfanumerický LCD displej. 
 Pøi naplnìní kapacity parkovištì se na 1 sekundu aktivuje piezomìniè pro zaznìní zvukového signálu znaèící plné parkovištì.
-Pro zamezení pøíjezdu dalších aut se aktivuje microservo, které zavøe bránu. 
+Pro zamezení pøíjezdu dalších aut se aktivuje micro servo, které zavøe bránu. 
 Èervená LED signalizuje naplnìní parkovištì.
 Zelená LED signalizuje, že parkovištì obsahuje volná místa.
 
 základní èásti:
 			- piezomìniè
 			- 2 IR senzory
-			- LCD display
+			- LCD displej
 			- micro servo
 			- AD pøevodník
 			- zelená LED
