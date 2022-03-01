@@ -1,5 +1,5 @@
 #include "spse_stm8.h"  
-
+#include "delay.h"
 
 // blok funkcí pro STM s instancí ADC2
 #ifdef STM8S208

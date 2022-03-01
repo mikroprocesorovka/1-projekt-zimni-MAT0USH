@@ -1,0 +1,8 @@
+;	STMicroelectronics dependencies file
+
+[Version]
+Keyword=ST7Project
+Number=1.3
+
+[Root.Source Files.main.c.Config.0]
+ExternDep= main.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\Hstm8\mods0.h"  "..\2021-05- projekt pruchody\inc\stm8s.h"  "..\2021-05- projekt pruchody\inc\stm8s_conf.h"  "..\2021-05- projekt pruchody\inc\stm8s_adc2.h"  "..\2021-05- projekt pruchody\inc\stm8s_awu.h"  "..\2021-05- projekt pruchody\inc\stm8s_beep.h"  "..\2021-05- projekt pruchody\inc\stm8s_can.h"  "..\2021-05- projekt pruchody\inc\stm8s_clk.h"  "..\2021-05- projekt pruchody\inc\stm8s_exti.h"  "..\2021-05- projekt pruchody\inc\stm8s_flash.h"  "..\2021-05- projekt pruchody\inc\stm8s_gpio.h"  "..\2021-05- projekt pruchody\inc\stm8s_i2c.h"  "..\2021-05- projekt pruchody\inc\stm8s_itc.h"  "..\2021-05- projekt pruchody\inc\stm8s_iwdg.h"  "..\2021-05- projekt pruchody\inc\stm8s_rst.h"  "..\2021-05- projekt pruchody\inc\stm8s_spi.h"  "..\2021-05- projekt pruchody\inc\stm8s_tim1.h"  "..\2021-05- projekt pruchody\inc\stm8s_tim2.h"  "..\2021-05- projekt pruchody\inc\stm8s_tim3.h"  "..\2021-05- projekt pruchody\inc\stm8s_tim4.h"  "..\2021-05- projekt pruchody\inc\stm8s_uart1.h"  "..\2021-05- projekt pruchody\inc\stm8s_uart3.h"  "..\2021-05- projekt pruchody\inc\stm8s_wwdg.h"  "..\2021-05- projekt pruchody\inc\delay.h"  "..\2021-05- projekt pruchody\inc\milis.h" stm8_hd44780.h  "C:\Program Files (x86)\COSMIC\FSE_Compilers\Hstm8\stdio.h"  "..\2021-05- projekt pruchody\inc\spse_stm8.h"
